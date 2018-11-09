@@ -1,6 +1,6 @@
 <template>
-  <div class="aside">
-    aside
+  <div class="v-header">
+    header
   </div>
 </template>
 
@@ -14,14 +14,14 @@
 </script>
 
 <style lang='less' scoped>
-  .aside {
+  .v-header {
     position: fixed;
-    z-index: 200;
+    z-index: 300;
     left: 0;
-    top: 50px;
-    bottom: 0;
-    width: 150px;
-    padding: 30px 0 0;
-    background: #31354B;
+    top: 0;
+    width: 100%;
+    min-width: 1200px;
+    height: 50px;
+    background: #2d303b;
   }
 </style>
