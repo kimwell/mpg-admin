@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import App from './App.vue'
 import iView from 'iview';
-// import 'iview/dist/styles/iview.css';
+import 'iview/dist/styles/iview.css';
 import router from './router/index'
 import store from './store/store'
 import * as filters from './utils/filters' //过滤器

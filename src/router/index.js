@@ -5,7 +5,6 @@ import {
   Modal
 } from 'iview'
 import routes from './routers'
-import { format } from 'url';
 
 Vue.use(Router);
 
@@ -28,36 +27,34 @@ const router = new Router({
 const LOGIN_PAGE_NAME = 'login'
 
 router.beforeEach((to, from, next) => {
-  if (to.meta.isFront) {
-    //  前端页面不需要验证登录
-    next()
-  } else {
-    const getToken = () => {
-      const token = store.state.authorization
-      if (token) return token
-      else return false
-    }
-    const token = getToken();
-    if (!token && to.name !== LOGIN_PAGE_NAME) {
-      // 未登录且要跳转的页面不是登录页
-      next({
-        name: LOGIN_PAGE_NAME, // 跳转到登录页,
-        query: {
-          redirect: to.fullPath
-        }
-      })
-    } else if (!token && to.name === LOGIN_PAGE_NAME) {
-      // 未登陆且要跳转的页面是登录页
-      next() // 跳转
-    } else if (token && to.name === LOGIN_PAGE_NAME) {
-      // 已登录且要跳转的页面是登录页
-      next({
-        name: '_home' // 跳转到homeName页
-      })
-    } else {
-      next();
-    }
-  }
+  next();
+  // if (to.meta.isFront) {
+  //   next()
+  // } else {
+  //   const getToken = () => {
+  //     const token = store.state.authorization
+  //     if (token) return token
+  //     else return false
+  //   }
+  //   const token = getToken();
+  //   if (!token && to.name !== LOGIN_PAGE_NAME) {
+  //     next({
+  //       name: LOGIN_PAGE_NAME, // 跳转到登录页,
+  //       query: {
+  //         redirect: to.fullPath
+  //       }
+  //     })
+  //   } else if (!token && to.name === LOGIN_PAGE_NAME) {
+  //     next() // 跳转
+  //   } else if (token && to.name === LOGIN_PAGE_NAME) {
+  //     // 已登录且要跳转的页面是登录页
+  //     next({
+  //       name: '_home' // 跳转到homeName页
+  //     })
+  //   } else {
+  //     next();
+  //   }
+  // }
   // if (to.meta.requireAuth) {
   //   next();
   // } else {

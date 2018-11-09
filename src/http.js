@@ -20,7 +20,7 @@ axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded
 axios.defaults.withCredentials = true;
 
 // 获取用户token
-let authorization = store.state.authorization;
+// let authorization = store.state.authorization;
 
 // http request 拦截器
 axios.interceptors.request.use(config => {
