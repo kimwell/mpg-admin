@@ -9,7 +9,7 @@ export default [{
     hideInMenu: true
   }
 }, {
-  path: '/_home',
+  path: '/',
   name: '_home',
   redirect: '/home',
   component: Main,
@@ -22,6 +22,14 @@ export default [{
     component: resolve => require(['@/views/index/index.vue'], resolve),
     meta: {
       title: '首页',
+      hideInMenu: true
+    }
+  },{
+    path: '/adManage',
+    name: 'adManage',
+    component: resolve => require(['@/views/adManage/index.vue'], resolve),
+    meta: {
+      title: '广告管理',
       hideInMenu: true
     }
   }]
