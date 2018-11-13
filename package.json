@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "dateformat-util": "^1.0.5",
     "iview": "^3.1.5",
     "vue": "^2.5.17",
     "vue-ls": "^3.2.0",

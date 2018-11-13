@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Card :bordered="false" title="广告管理">
+    <Card :bordered="false" title="广告管理" dis-hover>
       <Button slot="extra" type="primary" @click="openModel(false)">新增广告</Button>
       <div>
         <Table :columns="tableHeader" ref="goodsTable" border :data="list">

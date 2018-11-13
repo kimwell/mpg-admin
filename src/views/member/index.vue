@@ -1,15 +1,28 @@
 <template>
   <div class="page-inner">
-    <Card :bordered="false" title="系统设置">
+    <Card :bordered="false" title="会员管理" dis-hover>
       <div class="card-contnet">
         <div class="table-contnet">
           <Row class-name="head">
-            <Col class-name="col" span="5">小程序最新版本号</Col>
-            <Col class-name="col" span="5">服务器域名或IP</Col>
-            <Col class-name="col" span="5">小程序appId</Col>
-            <Col class-name="col" span="5">小程序appSecret</Col>
-            <Col class-name="col" span="4">操作</Col>
+            <Col class-name="col" span="5">编号</Col>
+            <Col class-name="col" span="5">手机号</Col>
+            <Col class-name="col" span="5">积分</Col>
+            <Col class-name="col" span="5">openId</Col>
+            <Col class-name="col" span="4">更新时间</Col>
           </Row>
+          <Row v-for="(item,index) in list" :key="index">
+            <Col class-name="col" span="5">{{item.id}}</Col>
+            <Col class-name="col" span="5">{{item.phone}}</Col>
+            <Col class-name="col" span="5">{{item.credits}}</Col>
+            <Col class-name="col" span="5">{{item.openId}}</Col>
+            <Col class-name="col" span="4">{{item.updateTime}}</Col>
+          </Row>
+        </div>
+          <Row v-if="list.length === 0">
+            <Col span="24" style="text-align: center;padding: 20px 0;">暂无数据</Col>
+          </Row>
+        <div class="paging">
+          <Page class="page-count" size="small" show-elevator :total="totalCount" show-total :current="pageApi.pageIndex" :page-size="pageApi.pageSize" @on-change="changePage"></Page>
         </div>
       </div>
     </Card>
@@ -22,7 +35,6 @@
       return {
         list: [],
         pageApi: {
-          idCardNo: '',
           pageIndex: 1,
           pageSize: 10,
           phone: ''
@@ -44,6 +56,10 @@
       },
       save(){
         
+      },
+      changePage(page){
+        this.pageIndex = page;
+        this.getData(this.pageApi)
       }
     },
     created() {

@@ -37,7 +37,6 @@
       },
       login() {
         this.$http.post(this.$api.login, this.dataApi).then(res => {
-          console.log(res)
           if (res.code === 1000) {
             this.setUser({
               authorization: res.data.token
