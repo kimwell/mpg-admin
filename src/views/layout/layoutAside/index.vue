@@ -13,8 +13,14 @@
     data() {
       return {
         menu: [{
+          name: '会员管理',
+          route: '/member'
+        },{
           name: '广告管理',
           route: '/adManage'
+        },{
+          name: '系统设置',
+          route: '/system'
         }]
       }
     },

@@ -32,5 +32,21 @@ export default [{
       title: '广告管理',
       hideInMenu: true
     }
+  },{
+    path: '/system',
+    name: 'system',
+    component: resolve => require(['@/views/system/index.vue'], resolve),
+    meta: {
+      title: '系统设置',
+      hideInMenu: true
+    }
+  },{
+    path: '/member',
+    name: 'member',
+    component: resolve => require(['@/views/member/index.vue'], resolve),
+    meta: {
+      title: '会员管理',
+      hideInMenu: true
+    }
   }]
 }]

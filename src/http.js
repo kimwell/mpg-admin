@@ -13,7 +13,7 @@ import router from './router/index'
 // axios 配置
 // axios.defaults.timeout = 20000;
 if (process.env.NODE_ENV == 'development')
-  axios.defaults.baseURL = 'http://192.168.0.120:8090';
+  axios.defaults.baseURL = 'http://192.168.0.81:8090';
   // axios.defaults.baseURL = 'http://192.168.0.40:8080'; //胡
   // axios.defaults.baseURL = 'http://192.168.0.154:8080'; //陈
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8'; //配置请求头
