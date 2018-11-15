@@ -5,27 +5,45 @@
         <div class="table-contnet">
           <Row class-name="head">
             <Col class-name="col" span="5">编号</Col>
-            <Col class-name="col" span="5">手机号</Col>
-            <Col class-name="col" span="5">积分</Col>
-            <Col class-name="col" span="5">openId</Col>
+            <Col class-name="col" span="4">手机号</Col>
+            <Col class-name="col" span="4">积分</Col>
+            <Col class-name="col" span="4">openId</Col>
             <Col class-name="col" span="4">更新时间</Col>
+            <Col class-name="col" span="3">操作</Col>
           </Row>
           <Row v-for="(item,index) in list" :key="index">
             <Col class-name="col" span="5">{{item.id}}</Col>
-            <Col class-name="col" span="5">{{item.phone}}</Col>
-            <Col class-name="col" span="5">{{item.credits}}</Col>
-            <Col class-name="col" span="5">{{item.openId}}</Col>
-            <Col class-name="col" span="4">{{item.updateTime}}</Col>
+            <Col class-name="col" span="4">{{item.phone}}</Col>
+            <Col class-name="col" span="4">{{item.credits}}</Col>
+            <Col class-name="col" span="4">{{item.openId}}</Col>
+            <Col class-name="col" span="4">{{item.updateTime | dateformat}}</Col>
+            <Col class-name="col" span="3">
+            <Button type="primary" size="small" @click="openModal(item)">扣积分</Button>
+            </Col>
           </Row>
         </div>
-          <Row v-if="list.length === 0">
-            <Col span="24" style="text-align: center;padding: 20px 0;">暂无数据</Col>
-          </Row>
+        <Row v-if="list.length === 0">
+          <Col span="24" style="text-align: center;padding: 20px 0;">暂无数据</Col>
+        </Row>
         <div class="paging">
           <Page class="page-count" size="small" show-elevator :total="totalCount" show-total :current="pageApi.pageIndex" :page-size="pageApi.pageSize" @on-change="changePage"></Page>
         </div>
       </div>
     </Card>
+    <Modal v-model="show" title="扣积分" :closable="false" :mask-closable="false">
+      <Form :label-width="100" ref="formRef" :model="dataApi" :rules="rules">
+        <FormItem label="积分：" prop="credits">
+          <InputNumber :max="max" :min="0" v-model.number="dataApi.credits" style="width:100%;"></InputNumber>
+        </FormItem>
+        <FormItem label="备注：">
+          <Input type="text" v-model="dataApi.remark" placeholder="请输入..."></Input>
+        </FormItem>
+      </Form>
+      <div slot="footer">
+        <Button @click="cancel('formRef')">取消</Button>
+        <Button type="primary" @click="handleSubmit('formRef')" :loading="loading">保存</Button>
+      </div>
+    </Modal>
   </div>
 </template>
 
@@ -39,27 +57,64 @@
           pageSize: 10,
           phone: ''
         },
-        totalCount: 0
+        totalCount: 0,
+        show: false,
+        dataApi: {
+          credits: 0,
+          remark: '',
+          userId: ''
+        },
+        rules: {
+          credits:[{
+            required: true,
+            message: '请选择',
+            trigger: 'blur',
+            type: 'number'
+          }]
+        },
+        max: 0,
+        loading: false
       }
     },
     methods: {
       getData(params) {
-        this.$http.get(this.$api.userPage,params).then(res => {
+        this.$http.get(this.$api.userPage, params).then(res => {
           if (res.code === 1000) {
             this.list = res.data.data;
             this.totalCount = res.data.totalCount
           }
         })
       },
-      edit() {
-  
+      cancel(name){
+        this.$refs[name].resetFields();
+        this.show = false;
       },
-      save(){
-        
+      handleSubmit(name){
+        this.$refs[name].validate((valid) => {
+          this.loading = true
+          if (valid) {
+            let params = this.$clearData(this.dataApi);
+            this.$http.post(this.$api.changCredits, params).then(res => {
+              if (res.code === 1000) {
+                this.$Message.success('保存成功');
+                this.getData(this.pageApi);
+                this.show = false;
+              }
+              this.loading = false;
+            })
+          } else {
+            this.$Message.error('验证失败');
+          }
+        })
       },
-      changePage(page){
+      changePage(page) {
         this.pageIndex = page;
         this.getData(this.pageApi)
+      },
+      openModal(item){
+        this.dataApi.userId = item.id;
+        this.max = item.credits;
+        this.show = true;
       }
     },
     created() {

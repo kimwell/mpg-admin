@@ -1,6 +1,6 @@
 let commHost = ''
 if (process.env.NODE_ENV == 'development') {
-  commHost = 'http://192.168.0.81:8090'
+  commHost = 'http://192.168.0.210:8090'
 }
 
 /**
@@ -26,6 +26,18 @@ export const advertisementList = '/sys/advertisement/list'
 export const advertisementSave = '/sys/advertisement/save'
 
 
+/**
+ * 预览
+ */
+export const previewApp = '/sys/advertisement/mp/preview'
+
+
+/**
+ * 发布
+ */
+export const uploadApp = '/sys/advertisement/mp/upload'
+
+
 
 /**
  * 广告删除
@@ -46,5 +58,10 @@ export const settingChange = '/sys/setting/change'
  * 会员
  */
 export const userPage = '/sys/user/page'
+
+/**
+ * 扣除积分
+ */
+export const changCredits = '/sys/user/changCredits'
 
 

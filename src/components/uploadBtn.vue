@@ -79,7 +79,7 @@
             this.imgSrc = [];
           }
           if (process.env.NODE_ENV == 'development') {
-            const commHost = 'http://192.168.0.81:8090'
+            const commHost = 'http://192.168.0.210:8090'
             this.imgSrc.push(commHost + res.data);
           }else{
             this.imgSrc.push(res.data);

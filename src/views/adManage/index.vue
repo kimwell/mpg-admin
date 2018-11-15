@@ -1,6 +1,8 @@
 <template>
   <div>
     <Card :bordered="false" title="广告管理" dis-hover>
+      <Button slot="extra" type="primary" @click="previewApp">预览小程序</Button>
+      <Button slot="extra" type="primary" @click="publishApp" style="margin: 0 15px;">发布小程序</Button>
       <Button slot="extra" type="primary" @click="openModel(false)">新增广告</Button>
       <div>
         <Table :columns="tableHeader" ref="goodsTable" border :data="list">
@@ -8,7 +10,7 @@
           <template slot="action" slot-scope="props">
               <Button type="warning" size="small" style="margin-right:8px;" @click="openModel(true,props.row)">编辑</Button>
               <Button type="success" size="small" style="margin-right:8px;" @click="del(props.row)">删除</Button>
-</template>
+          </template>
         </Table>
       </div>
     </Card>
@@ -199,6 +201,17 @@
             this.list = res.data;
           }
         })
+      },
+      previewApp(){
+        this.$http.get(this.$api.previewApp).then(res =>{
+          if(res.code === 1000){
+            this.prevImgShow = true
+            this.prevImg = res.data;
+          }
+        })
+      },
+      publishApp(){
+
       },
       openModel(isEdit, item) {
         this.isEdit = isEdit
