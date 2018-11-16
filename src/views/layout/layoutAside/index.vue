@@ -33,7 +33,7 @@
     position: fixed;
     z-index: 200;
     left: 0;
-    top: 50px;
+    top: 0;
     bottom: 0;
     width: 150px;
     padding: 30px 0 0;

@@ -2,7 +2,7 @@
   <div class="layout">
     <layoutAside></layoutAside>
       <div class="wrapper">
-      <layoutHeader></layoutHeader>
+      <!-- <layoutHeader></layoutHeader> -->
       <div class="layout-content">
         <router-view/>
       </div>
@@ -12,11 +12,11 @@
 
 <script>
   import layoutAside from '../layoutAside/index.vue'
-  import layoutHeader from '../layoutHeader/index.vue'
+  // import layoutHeader from '../layoutHeader/index.vue'
   export default {
     components: {
       layoutAside,
-      layoutHeader
+      // layoutHeader
     },
     data() {
       return {}
@@ -28,13 +28,13 @@
 <style lang='less' scoped>
   .wrapper {
     min-width: 1200px;
-    margin: 50px 0 0;
+    margin: 0 0 0;
     overflow: hidden;
     .layout-content {
       position: absolute;
       left: 150px;
       right: 0;
-      top: 50px;
+      top: 0;
       padding: 15px;
       min-width: 1000px;
       margin: 0;
