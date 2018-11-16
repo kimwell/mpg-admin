@@ -6,7 +6,7 @@ if (process.env.NODE_ENV == 'development') {
 /**
  * 上传文件
  */
-export const uploadApi = commHost + '/sys/advertisement/upload'
+export const uploadApi = commHost + '/sys/wxapp/upload'
 
 
 /**
@@ -17,25 +17,25 @@ export const login = '/sys/login'
 /**
  * 广告列表
  */
-export const advertisementList = '/sys/advertisement/list'
+export const advertisementList = '/sys/wxapp/list'
 
 
 /**
  * 广告保存
  */
-export const advertisementSave = '/sys/advertisement/save'
+export const advertisementSave = '/sys/wxapp/save'
 
 
 /**
  * 预览
  */
-export const previewApp = '/sys/advertisement/mp/preview'
+export const previewApp = '/sys/wxapp/mp/preview'
 
 
 /**
  * 发布
  */
-export const uploadApp = '/sys/advertisement/mp/upload'
+export const uploadApp = '/sys/wxapp/mp/upload'
 
 
 
