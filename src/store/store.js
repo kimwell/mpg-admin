@@ -7,23 +7,33 @@ Vue.use(VueLocalStorage);
 Vue.use(Vuex);
 export default new Vuex.Store({
     state: {
-        user: {},
+        user: Vue.ls.get('user'),
         authorization: Vue.ls.get('authorization'),
     },
     getters: {
-        authorization: state => {
-            //写死的超管id,后期修改为从state user中获取
-            return state.authorization
+        user: state =>{
+            return state.user
         }
     },
     mutations: {
         [types.LOGIN]: (state, payload) => {
-            Vue.ls.set('authorization_bg', payload.authorization);
+            Vue.ls.set('authorization', payload.authorization);
             state.authorization = payload.authorization;
         },
         [types.LOGOUT]: (state) => {
-            Vue.ls.remove('authorization_bg');
-            state.authorization = undefined;
-        }
+            Vue.ls.remove('authorization');
+            Vue.ls.remove('user');
+            state.authorization = '';
+            state.user = undefined;
+        },
+        [types.SET_USER_INFO]: (state, payload) => {
+            Vue.ls.set('user', payload);
+            state.user = payload;
+        },
+    },
+    actions: {
+      loginOut(context) {
+        context.commit(types.LOGOUT);
+      }
     }
 })

@@ -12,7 +12,18 @@
   export default {
     data() {
       return {
-        menu: [{
+        menu: []
+      }
+    },
+    computed: {
+      role(){
+        return this.$store.state.user
+      }
+    },
+    methods: {},
+    created(){
+      if(this.role.level === 1){
+        let mneuArr = [{
           name: '会员管理',
           route: '/member'
         },{
@@ -21,10 +32,25 @@
         },{
           name: '系统设置',
           route: '/system'
+        },{
+          name: '门店管理',
+          route: '/shop'
+        },{
+          name: '积分兑换记录',
+          route: '/record'
         }]
+        this.menu = [...mneuArr]
+      }else{
+        let mneuArr = [{
+          name: '积分兑换',
+          route: '/exchange'
+        },{
+          name: '积分兑换记录',
+          route: '/record'
+        }]
+        this.menu = [...mneuArr]
       }
-    },
-    methods: {}
+    }
   }
 </script>
 
@@ -33,7 +59,7 @@
     position: fixed;
     z-index: 200;
     left: 0;
-    top: 0;
+    top: 40px;
     bottom: 0;
     width: 150px;
     padding: 30px 0 0;

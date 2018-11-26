@@ -18,6 +18,10 @@
 
 <script>
   import * as types from '@/store/types'
+  import {
+    mapGetters,
+    mapActions
+} from 'vuex'
   export default {
     data() {
       return {
@@ -41,6 +45,9 @@
             this.setUser({
               authorization: res.data.token
             });
+            this.$store.commit(types.SET_USER_INFO, res.data.user);
+          }else{
+            this.$Message.error(res.message)
           }
         })
       }

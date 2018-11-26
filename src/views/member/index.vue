@@ -5,21 +5,17 @@
         <div class="table-contnet">
           <Row class-name="head">
             <Col class-name="col" span="5">编号</Col>
-            <Col class-name="col" span="4">手机号</Col>
-            <Col class-name="col" span="4">积分</Col>
-            <Col class-name="col" span="4">openId</Col>
+            <Col class-name="col" span="5">手机号</Col>
+            <Col class-name="col" span="5">积分</Col>
+            <Col class-name="col" span="5">openId</Col>
             <Col class-name="col" span="4">更新时间</Col>
-            <Col class-name="col" span="3">操作</Col>
           </Row>
           <Row v-for="(item,index) in list" :key="index">
             <Col class-name="col" span="5">{{item.id}}</Col>
-            <Col class-name="col" span="4">{{item.phone}}</Col>
-            <Col class-name="col" span="4">{{item.credits}}</Col>
-            <Col class-name="col" span="4">{{item.openId}}</Col>
+            <Col class-name="col" span="5">{{item.phone}}</Col>
+            <Col class-name="col" span="5">{{item.credits}}</Col>
+            <Col class-name="col" span="5">{{item.openId}}</Col>
             <Col class-name="col" span="4">{{item.updateTime | dateformat}}</Col>
-            <Col class-name="col" span="3">
-            <Button type="primary" size="small" @click="openModal(item)">扣积分</Button>
-            </Col>
           </Row>
         </div>
         <Row v-if="list.length === 0">

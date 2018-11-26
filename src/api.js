@@ -64,4 +64,21 @@ export const userPage = '/sys/user/page'
  */
 export const changCredits = '/sys/user/changCredits'
 
+/**
+ * 门店分页列表
+ */
+export const shopPage = '/sys/shop/page'
+
+
+/**
+ * 门店保存
+ */
+export const shopSave = '/sys/shop/save'
+
+
+/**
+ * 门店积分记录
+ */
+export const shopCreditsLog = '/sys/shop/shopCreditsLog'
+
 
