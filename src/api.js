@@ -42,7 +42,7 @@ export const uploadApp = '/sys/wxapp/mp/upload'
 /**
  * 广告删除
  */
-export const advertisementDelete = '/sys/advertisement/delete'
+export const advertisementDelete = '/sys/wxapp/delete'
 
 /**
  * 获取配置

@@ -15,6 +15,7 @@
       </div>
     </Card>
     <Modal v-model="prevImgShow" title="查看图片" width="800">
+      <p v-if="prevImgStr != ''">{{prevImgStr}}</p>
       <div class="prevImg">
         <img :src="prevImg">
       </div>
@@ -29,12 +30,12 @@
         </FormItem>
         <FormItem label="广告类型：" prop="advType">
           <Select v-model="dataApi.advType" style="width:100%">
-                    <Option v-for="item in [{val: '1',name: '图片广告'},{val: '2',name: '小程序连接'},{val: '3',name: '网页连接'}]" :value="item.val" :key="item.val">{{ item.name }}</Option>
+                    <Option v-for="item in [{val: '1',name: '图片广告'},{val: '2',name: '小程序连接'}]" :value="item.val" :key="item.val">{{ item.name }}</Option>
                 </Select>
         </FormItem>
         <FormItem label="广告位置：" prop="position">
           <Select v-model="dataApi.position" style="width:100%">
-                    <Option v-for="item in [{val: '1',name: '首页顶部'},{val: '2',name: '首页滚动广告'},{val: '3',name: '首页底部广告'},{val:'4',name: '其他'}]" :value="item.val" :key="item.val">{{ item.name }}</Option>
+                    <Option v-for="item in [{val: '1',name: '首页顶部'},{val: '2',name: '首页滚动广告'},{val: '3',name: '首页底部广告'},{val:'4',name: '其他'},{val:'6',name: '个人中心底部'}]" :value="item.val" :key="item.val">{{ item.name }}</Option>
                 </Select>
         </FormItem>
         <FormItem label="图片：" prop="img">
@@ -62,6 +63,21 @@
       <div slot="footer">
         <Button @click="cancel('formRef')">取消</Button>
         <Button type="primary" @click="handleSubmit('formRef')" :loading="loading">{{ isEdit ? '编辑' : '添加' }}</Button>
+      </div>
+    </Modal>
+    <Modal v-model="publishShow" title="发布小程序" :closable="false" :mask-closable="false">
+      <p v-if="currentVersion != ''">当前版本号：{{currentVersion}}</p>
+      <Form :label-width="100" ref="formRefs" :model="publishApi" :rules="rulesPublish">
+        <FormItem label="版本号：" prop="version">
+          <Input type="text" v-model="publishApi.version" placeholder="请输入..."></Input>
+        </FormItem>
+        <FormItem label="备注：">
+          <Input type="text" v-model="publishApi.remark" placeholder="请输入..."></Input>
+        </FormItem>
+      </Form>
+      <div slot="footer">
+        <Button @click="cancelPublish('formRefs')">取消</Button>
+        <Button type="primary" @click="handlePublish('formRefs')" :loading="loading">发布</Button>
       </div>
     </Modal>
   </div>
@@ -191,7 +207,21 @@
         loading: false,
         editItem: {},
         prevImgShow: false,
-        prevImg: ''
+        prevImg: '',
+        prevImgStr: '',
+        publishShow: false,
+        publishApi: {
+          version: '',
+          remark: ''
+        },
+        rulesPublish:{
+          version:[{
+            required: true,
+            message: '请选择',
+            trigger: 'change'
+          }]
+        },
+        currentVersion: ''
       }
     },
     methods: {
@@ -202,16 +232,54 @@
           }
         })
       },
+      // 预览
       previewApp(){
         this.$http.get(this.$api.previewApp).then(res =>{
           if(res.code === 1000){
+            this.prevImgStr = '';
             this.prevImgShow = true
+            this.prevImg = res.data;
+          }else if(res.code === 4000){
+            this.prevImgShow = true
+            this.prevImgStr = res.message;
             this.prevImg = res.data;
           }
         })
       },
+      //  发布
       publishApp(){
-
+        this.publishShow = true;
+        this.getVersion();
+      },
+      cancelPublish(name){
+        this.$refs[name].resetFields();
+        this.publishApi = {
+          version: '',
+          remark: ''
+        }
+        this.publishShow = false;
+      },
+      handlePublish(name){
+        this.$refs[name].validate((valid) => {
+          this.loading = true
+          if (valid) {
+            let para = this.$clearData(this.publishApi);
+            this.$http.get(this.$api.uploadApp, {params: para}).then(res => {
+              if (res.code === 1000) {
+                this.prevImgStr = '';
+                this.$Message.success('发布成功');
+                this.cancelPublish('formRefs')
+              }else if(res.code === 4000){
+                this.prevImgShow = true
+                this.prevImgStr = res.message;
+                this.prevImg = res.data;
+              }
+              this.loading = false;
+            })
+          } else {
+            this.$Message.error('验证失败');
+          }
+        })
       },
       openModel(isEdit, item) {
         this.isEdit = isEdit
@@ -290,6 +358,13 @@
       showImg(item){
         this.prevImg = item.img;
         this.prevImgShow = true;
+      },
+      getVersion(){
+        this.$http.get(this.$api.settingData).then(res =>{
+          if(res.code === 1000){
+            this.currentVersion = res.data.miniProgramVersion
+          }
+        })
       }
     },
     created() {
